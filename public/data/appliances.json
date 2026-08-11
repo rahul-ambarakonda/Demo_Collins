@@ -1,26 +1,50 @@
 [
   {
     "id": "1",
-    "name": "Refrigerator",
-    "description": "A modern refrigerator with smart features.",
+    "name": "French Door Refrigerator",
+    "description": "Spacious 28 cu. ft. French Door Refrigerator with external ice and water dispenser, adjustable shelves, and a deli drawer.",
     "imageUrl": "https://via.placeholder.com/150/FF5733/FFFFFF?text=Refrigerator"
   },
   {
     "id": "2",
-    "name": "Washing Machine",
-    "description": "High-efficiency washing machine with multiple wash cycles.",
+    "name": "Front-Load Smart Washer",
+    "description": "High-efficiency 4.5 cu. ft. front-load smart washer with steam cycle, Wi-Fi connectivity, and allergen removal.",
     "imageUrl": "https://via.placeholder.com/150/33FF57/FFFFFF?text=Washing+Machine"
   },
   {
     "id": "3",
-    "name": "Microwave Oven",
-    "description": "Compact microwave oven with easy-to-use controls.",
+    "name": "Over-the-Range Microwave",
+    "description": "1.7 cu. ft. over-the-range microwave with sensor cooking, 300 CFM ventilation, and LED lighting.",
     "imageUrl": "https://via.placeholder.com/150/3357FF/FFFFFF?text=Microwave+Oven"
   },
   {
     "id": "4",
-    "name": "Dishwasher",
-    "description": "Quiet and efficient dishwasher for sparkling clean dishes.",
+    "name": "Built-In Dishwasher",
+    "description": "Quiet built-in dishwasher with stainless steel tub, 3rd rack, and adjustable upper rack for versatile loading.",
     "imageUrl": "https://via.placeholder.com/150/FF33CC/FFFFFF?text=Dishwasher"
+  },
+  {
+    "id": "5",
+    "name": "Electric Convection Range",
+    "description": "5.3 cu. ft. electric convection range with air fry mode, quick boil burner, and self-cleaning oven.",
+    "imageUrl": "https://via.placeholder.com/150/FF8833/FFFFFF?text=Oven+Range"
+  },
+  {
+    "id": "6",
+    "name": "Cordless Stick Vacuum",
+    "description": "Lightweight cordless stick vacuum with powerful suction, HEPA filtration, and up to 60 minutes of run time.",
+    "imageUrl": "https://via.placeholder.com/150/33CCCC/FFFFFF?text=Vacuum+Cleaner"
+  },
+  {
+    "id": "7",
+    "name": "Programmable Drip Coffee Maker",
+    "description": "12-cup programmable drip coffee maker with thermal carafe, brew strength selector, and 24-hour programmability.",
+    "imageUrl": "https://via.placeholder.com/150/CC33FF/FFFFFF?text=Coffee+Maker"
+  },
+  {
+    "id": "8",
+    "name": "4-Slice Toaster",
+    "description": "Stylish 4-slice toaster with extra-wide slots, bagel and defrost functions, and removable crumb tray.",
+    "imageUrl": "https://via.placeholder.com/150/33FFCC/FFFFFF?text=Toaster"
   }
 ]
