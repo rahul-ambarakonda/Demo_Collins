@@ -1,0 +1,20 @@
+[
+  {
+    "id": "app1",
+    "name": "Smart Toaster",
+    "description": "Toasts bread to perfection every time with smart sensors.",
+    "imageUrl": "/images/toaster.jpg"
+  },
+  {
+    "id": "app2",
+    "name": "Robotic Vacuum",
+    "description": "Automatically cleans your floors, intelligently navigating obstacles.",
+    "imageUrl": "/images/vacuum.jpg"
+  },
+  {
+    "id": "app3",
+    "name": "Espresso Machine",
+    "description": "Barista-quality espresso at home with a touch of a button.",
+    "imageUrl": "/images/espresso.jpg"
+  }
+]
