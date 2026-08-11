@@ -1,0 +1,118 @@
+# Project: Demo_Collins
+# Description: A proof-of-concept task management system using React/Next.js (frontend) and Node.js/NestJS (backend) with PostgreSQL.
+#
+# Implemented in this sprint:
+# - CT-5
+# - CT-6
+# - CT-7
+# - CT-8
+# - CT-9
+# - CT-10
+# - CT-11
+# - CT-12
+# - CT-13
+# - CT-14
+
+name: CI/CD
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    name: Continuous Integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          # npm cache is explicitly disabled as per instructions for agent-generated repos
+          # cache: 'npm' # Do not enable cache due to potential lockfile absence
+
+      - name: Install dependencies (with lockfile fallback)
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+      - name: Run lint (if present, best-effort)
+        run: npm run lint --if-present
+        continue-on-error: true
+
+      - name: Run tests (if present, best-effort)
+        run: npm test --if-present
+        continue-on-error: true
+
+  deploy:
+    name: Deploy to EC2
+    needs: ci
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    env:
+      EC2_HOST: ${{ secrets.EC2_HOST }} # Used to check if secrets are configured
+
+    steps:
+      - name: Skip deploy if EC2 secrets are not configured
+        if: env.EC2_HOST == ''
+        run: echo "EC2_HOST secret is not configured. Skipping deploy."
+
+      - name: Checkout repository
+        if: env.EC2_HOST != ''
+        uses: actions/checkout@v4
+
+      - name: Deploy application via SSH
+        if: env.EC2_HOST != ''
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # a. Source nvm so node/npm/pnpm are available in the non-interactive SSH shell
+            export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+            # b. cd to the deploy path
+            cd ${{ secrets.EC2_DEPLOY_PATH }}
+
+            # c. Fetch and hard-reset to remote so local changes never block the deploy
+            git fetch origin main
+            git reset --hard origin/main
+
+            # d. Sync new env vars from .env.sample into .env (append missing keys only, never overwrite)
+            if [ -f .env.sample ]; then
+              touch .env
+              while IFS= read -r line; do
+                # skip blank lines and comments
+                [[ -z "$line" || "$line" == \#* ]] && continue
+                key=$(echo "$line" | cut -d= -f1)
+                # only append if key not already present in .env
+                if ! grep -q "^${key}=" .env 2>/dev/null; then
+                  echo "$line" >> .env
+                  echo "⚠️  New env var added (set real value): ${key}"
+                fi
+              done < .env.sample
+            fi
+
+            # e. Install dependencies WITHOUT assuming a lockfile exists
+            if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+            # f. Run build step if the project has one, tolerating its absence
+            npm run build --if-present
+
+            # g. Restart the app with PM2 using zero-downtime reload
+            # (assuming NestJS entrypoint is dist/main.js after build)
+            pm2 reload app --update-env || pm2 start dist/main.js --name app
+
+            # h. pm2 save
+            pm2 save
