@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "name": "Refrigerator",
+    "description": "A modern refrigerator with smart features.",
+    "imageUrl": "https://via.placeholder.com/150/FF5733/FFFFFF?text=Refrigerator"
+  },
+  {
+    "id": "2",
+    "name": "Washing Machine",
+    "description": "High-efficiency washing machine with multiple wash cycles.",
+    "imageUrl": "https://via.placeholder.com/150/33FF57/FFFFFF?text=Washing+Machine"
+  },
+  {
+    "id": "3",
+    "name": "Microwave Oven",
+    "description": "Compact microwave oven with easy-to-use controls.",
+    "imageUrl": "https://via.placeholder.com/150/3357FF/FFFFFF?text=Microwave+Oven"
+  },
+  {
+    "id": "4",
+    "name": "Dishwasher",
+    "description": "Quiet and efficient dishwasher for sparkling clean dishes.",
+    "imageUrl": "https://via.placeholder.com/150/FF33CC/FFFFFF?text=Dishwasher"
+  }
+]
